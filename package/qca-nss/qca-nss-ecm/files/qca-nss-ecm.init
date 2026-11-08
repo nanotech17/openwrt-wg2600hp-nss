@@ -62,9 +62,22 @@ load_ecm() {
 		sysctl -w net.bridge.bridge-nf-call-ip6tables=1
 		sysctl -w net.bridge.bridge-nf-call-iptables=1
 	}
+
+	# Linux 6.x defaults nf_conntrack_events to 2 (events only while a ctnetlink
+	# listener exists). ECM's in-kernel notifier does not count as a listener, so
+	# it would miss conntrack DESTROY events and keep stale acceleration rules.
+	# Same as qosmio/nss-packages qca-nss-ecm.init.
+	if [ "$(uname -r | cut -d. -f1)" -ge 6 ]; then
+		echo 1 > /proc/sys/net/netfilter/nf_conntrack_events
+	fi
 }
 
 unload_ecm() {
+	# Restore the Linux 6.x default (see load_ecm)
+	if [ "$(uname -r | cut -d. -f1)" -ge 6 ]; then
+		echo 2 > /proc/sys/net/netfilter/nf_conntrack_events
+	fi
+
 	sysctl -w net.bridge.bridge-nf-call-ip6tables=0
 	sysctl -w net.bridge.bridge-nf-call-iptables=0
 
