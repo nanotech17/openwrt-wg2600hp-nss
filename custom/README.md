@@ -29,6 +29,7 @@ earlier 24.10 build, which has been removed.
 | 7 | The GitHub workflow of the base is removed | commit on this branch |
 | 8 | First-boot defaults for NSS | `custom/files/wg2600hp/etc/uci-defaults/98-wg2600hp-nss-defaults` |
 | 9 | Config: WG2600HP only, package selection, `CONFIG_ALL_KMODS=y` | `custom/configs/wg2600hp.config` |
+| 10 | Top-level README points here; the base's README is kept as `README.base.md` | commit on this branch |
 
 These parts of the base are kept unchanged:
 
