@@ -256,7 +256,7 @@ cat /proc/sys/net/netfilter/nf_conntrack_events                      # 1
 
 ## Tests
 
-The image was tested on one WG2600HP, with wired traffic only:
+The image was tested on one WG2600HP:
 
 - NSS offloading: TCP and UDP over plain IPv4, PPPoE, IPv6, DS-Lite and MAP-E
   ran at line rate with the CPU mostly idle. WireGuard runs on the CPU (about
@@ -266,8 +266,14 @@ The image was tested on one WG2600HP, with wired traffic only:
   MAP-E stall that change 5 fixes.
 - MAP-E with many short connections after the fix in change 5: no stalled
   connection in 284 test runs.
+- Wi-Fi, a short check on 5 GHz (channel 44, 40 MHz, transmit power lowered
+  to 10 dBm for a client close by) with one client: WPA2-Personal (PSK) and
+  WPA3-Personal (SAE, with the included `wpad-basic-mbedtls`) each kept a
+  connection for 5 minutes with TCP traffic in both directions and ping,
+  with no disconnection and no ping loss.
 
-Not tested: wireless throughput, long-term use, repeated reboots.
+Not tested: 2.4 GHz, Wi-Fi throughput and range, several clients, long-term
+use, repeated reboots.
 
 This image was tested on one WG2600HP only. Use it at your own risk.
 
