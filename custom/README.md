@@ -268,7 +268,9 @@ The image was tested on real WG2600HP hardware:
 Not tested: 2.4 GHz, Wi-Fi throughput and range, several clients, long-term
 use, repeated reboots.
 
-This image was tested on real WG2600HP hardware. Use it at your own risk.
+This image was tested on real WG2600HP hardware, but the tests were limited
+in scope. Long-term stability and correct operation after detailed
+configuration changes have not been verified. Use it at your own risk.
 
 ## License
 

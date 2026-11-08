@@ -14,4 +14,6 @@ for personal use.
   images.
 - The original OpenWrt README: [README.openwrt.md](README.openwrt.md)
 
-This image was tested on real WG2600HP hardware. Use it at your own risk.
+This image was tested on real WG2600HP hardware, but the tests were limited
+in scope. Long-term stability and correct operation after detailed
+configuration changes have not been verified. Use it at your own risk.
