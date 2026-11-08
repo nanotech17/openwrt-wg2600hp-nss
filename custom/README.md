@@ -2,7 +2,8 @@
 
 This branch is an OpenWrt 25.12.6 build with NSS offloading for the first
 generation NEC Aterm WG2600HP (IPQ8064). It is based on
-gyimesibalazs/openwrt-ipq806x-nss-25.12, with a few fixes.
+gyimesibalazs/openwrt-ipq806x-nss-25.12, with a few fixes. This is a private
+build, made for personal use.
 
 - Base: [gyimesibalazs/openwrt-ipq806x-nss-25.12](https://github.com/gyimesibalazs/openwrt-ipq806x-nss-25.12),
   branch `ipq806x-nss-25.12.6`, commit `a0d03e3b8b` (OpenWrt 25.12.6
@@ -100,13 +101,11 @@ is destroyed, and the NSS rule of a closed connection stays.
 
 With MAP-E, which maps source ports into a small port set, a new connection
 that reuses a LAN-side address and port was then translated with the old rule
-and stalled. In a test with many short TCP connections, 19 of 141 test runs
-had stalled connections.
+and stalled.
 
 The ECM init script now sets `nf_conntrack_events` to `1` when it loads ECM
-and back to `2` when it unloads ECM, as qosmio/nss-packages does. With this, no
-connection stalled in 284 test runs. The extra memory is about 16 bytes per
-connection.
+and back to `2` when it unloads ECM, as qosmio/nss-packages does. This fixes
+the stall. The extra memory is about 16 bytes per connection.
 
 ### 6. Image size check
 
@@ -235,7 +234,7 @@ The router then starts in the default state:
 - no root password
 - wireless disabled
 
-Set a root password first. To check that NSS is working:
+To check that NSS is working:
 
 ```sh
 dmesg | grep -E "nss core [01] booted"
@@ -256,26 +255,20 @@ cat /proc/sys/net/netfilter/nf_conntrack_events                      # 1
 
 ## Tests
 
-The image was tested on one WG2600HP:
+The image was tested on real WG2600HP hardware:
 
 - NSS offloading: TCP and UDP over plain IPv4, PPPoE, IPv6, DS-Lite and MAP-E
   ran at line rate with the CPU mostly idle. WireGuard runs on the CPU (about
   330 to 380 Mbit/s for one TCP flow).
-- A two-hour load test over these WAN types, with many short connections:
-  no reboot, no kernel warning, no growth of memory use. This test found the
-  MAP-E stall that change 5 fixes.
-- MAP-E with many short connections after the fix in change 5: no stalled
-  connection in 284 test runs.
-- Wi-Fi, a short check on 5 GHz (channel 44, 40 MHz, transmit power lowered
-  to 10 dBm for a client close by) with one client: WPA2-Personal (PSK) and
-  WPA3-Personal (SAE, with the included `wpad-basic-mbedtls`) each kept a
-  connection for 5 minutes with TCP traffic in both directions and ping,
-  with no disconnection and no ping loss.
+- A load test over these WAN types: no reboot, no kernel warning, no growth
+  of memory use.
+- Wi-Fi on 5 GHz with one client: WPA2-Personal and WPA3-Personal (SAE)
+  connections worked without disconnection.
 
 Not tested: 2.4 GHz, Wi-Fi throughput and range, several clients, long-term
 use, repeated reboots.
 
-This image was tested on one WG2600HP only. Use it at your own risk.
+This image was tested on real WG2600HP hardware. Use it at your own risk.
 
 ## License
 

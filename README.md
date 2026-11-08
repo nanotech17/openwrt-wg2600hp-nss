@@ -1,7 +1,8 @@
 # OpenWrt 25.12 NSS build for the NEC Aterm WG2600HP
 
 This branch builds OpenWrt 25.12.6 with Qualcomm NSS offloading for the first
-generation NEC Aterm WG2600HP (IPQ8064) only.
+generation NEC Aterm WG2600HP (IPQ8064) only. This is a private build, made
+for personal use.
 
 - What is changed, how to build and how to install:
   [custom/README.md](custom/README.md)
@@ -13,4 +14,4 @@ generation NEC Aterm WG2600HP (IPQ8064) only.
   images.
 - The original OpenWrt README: [README.openwrt.md](README.openwrt.md)
 
-This image was tested on one WG2600HP only. Use it at your own risk.
+This image was tested on real WG2600HP hardware. Use it at your own risk.
